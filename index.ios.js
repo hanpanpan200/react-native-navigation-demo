@@ -1,52 +1,51 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
-import React, {
+import React from 'react-native'
+import HomeScene from './app/HomeScene'
+import FirstRightScene from './app/FirstRightScene'
+var {
   AppRegistry,
   Component,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+  NavigatorIOS,
+} = React
 
 class NavigationDemo extends Component {
+  constructor(props) {
+    super(props)
+    //Be sure to add this line in the constructor, or the "this" in method _onRightButtonPress will reference to the object itself.
+    this._onRightButtonPress = this._onRightButtonPress.bind(this)
+  }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+      <NavigatorIOS ref="nav"
+        style = {styles.container}
+        initialRoute= {{
+          component: HomeScene,
+          title: "Navigation demo",
+          rightButtonTitle: "Right Scene",
+          onRightButtonPress: this._onRightButtonPress
+        }}/>
+    )
+  }
+
+  _onRightButtonPress() {
+    this.refs.nav.push({
+      title: "From Right",
+      component: FirstRightScene
+    })
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  scene: {
+    padding: 10,
+    paddingTop: 74,
+    flex: 1,
+  }
+})
 
 AppRegistry.registerComponent('NavigationDemo', () => NavigationDemo);
