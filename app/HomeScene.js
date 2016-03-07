@@ -19,7 +19,7 @@ class HomeScene extends Component {
     return (
       <View style={[styles.scene, {backgroundColor: '#DAF6FF'}]}>
         <TouchableHighlight onPress={this._onPress}>
-          <Text>Touch me to navigate to the first touch scene.</Text>
+          <Text>Touch me to transform "First touch" to next scene.</Text>
         </TouchableHighlight>
       </View>
     )
@@ -27,7 +27,8 @@ class HomeScene extends Component {
   _onPress() {
     this.props.navigator.push({
       title: 'First touch scene',
-      component: FirstTouchScene
+      component: FirstTouchScene,
+      passProps: {showLable: "First touch"}
     })
   }
 }
